@@ -48,7 +48,7 @@ public class ChatAppClient {
 		}
 	}
 	
-	public void sendClick() {
+	public void sendClick(boolean newMessage, String message) {
 		try {
 			if (os != null) {
 				os.writeObject("CLICK SENT FROM CHATAPPCLIENT");
@@ -57,5 +57,10 @@ public class ChatAppClient {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		if(newMessage) {
+			JOptionPane.showMessageDialog(null, "MESSAGE FROM SERVER:" + message);
+		}
 	}
+	
+	
 }

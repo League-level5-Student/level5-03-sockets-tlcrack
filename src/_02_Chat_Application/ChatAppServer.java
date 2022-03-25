@@ -62,7 +62,7 @@ public class ChatAppServer {
 		return port;
 	}
 
-	public void sendClick() {
+	public void sendClick(boolean newMessage, String message) {
 		try {
 			if (os != null) {
 				os.writeObject("CLICK SENT FROM CHATAPPSERVER");
@@ -71,5 +71,11 @@ public class ChatAppServer {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
+		if(newMessage) {
+			JOptionPane.showMessageDialog(null, "MESSAGE FROM SERVER:" + message);
+		}
 	}
+	
+	
 }
