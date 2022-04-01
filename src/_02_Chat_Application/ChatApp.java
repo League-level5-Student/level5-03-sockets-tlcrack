@@ -24,23 +24,21 @@ JButton button = new JButton("CLICK");
 	String serverMessage = "";
 	String clientMessage = "";
 	
-	boolean serverMessagePending = false;
-	boolean clientMessagePending = false;
 	
 	public static void main(String[] args) {
-		new ButtonClicker();
+		new ChatApp();
 	}
 	
 	public ChatApp(){
-		
 		int response = JOptionPane.showConfirmDialog(null, "Would you like to host a ChatApp connection?", "Buttons!", JOptionPane.YES_NO_OPTION);
 		if(response == JOptionPane.YES_OPTION){
 			server = new ChatAppServer(8080);
 			setTitle("SERVER");
 			JOptionPane.showMessageDialog(null, "Server started at: " + server.getIPAddress() + "\nPort: " + server.getPort());
+			client.username = JOptionPane.showInputDialog("Please enter a username.");
 			button.addActionListener((e)->{
 				this.serverMessage = writeMessage(false);
-				server.sendClick(clientMessagePending, clientMessage);
+				server.sendClick(serverMessage);
 			});
 			add(text);
 			add(button);
@@ -55,10 +53,10 @@ JButton button = new JButton("CLICK");
 			String prtStr = JOptionPane.showInputDialog("Enter the port number");
 			int port = Integer.parseInt(prtStr);
 			client = new ChatAppClient(ipStr, port);
-			
+			client.username = JOptionPane.showInputDialog("Please enter a username.");
 			button.addActionListener((e)->{
 				this.clientMessage = writeMessage(true);
-				client.sendClick(serverMessagePending, serverMessage);
+				client.sendClick(clientMessage);
 			});
 			add(text);
 			add(button);
@@ -75,12 +73,12 @@ JButton button = new JButton("CLICK");
 
 	public String writeMessage(boolean isClient) {
 		try {
-			String s = JOptionPane.showInputDialog("MESSAGE TO THE SERVER:");
+			String s;
 			if(isClient) {
-				clientMessagePending=true;
+				s = JOptionPane.showInputDialog("MESSAGE TO THE SERVER:");
 			}
 			else {
-				serverMessagePending=true;
+				s = JOptionPane.showInputDialog("MESSAGE TO THE CLIENT:");
 			}
 			return s;
 		}
@@ -89,5 +87,6 @@ JButton button = new JButton("CLICK");
 			return "";
 		}
 	}
+	
 	
 }
