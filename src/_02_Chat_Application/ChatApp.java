@@ -35,7 +35,7 @@ JButton button = new JButton("CLICK");
 			server = new ChatAppServer(8080);
 			setTitle("SERVER");
 			JOptionPane.showMessageDialog(null, "Server started at: " + server.getIPAddress() + "\nPort: " + server.getPort());
-			client.username = JOptionPane.showInputDialog("Please enter a username.");
+			server.username = JOptionPane.showInputDialog("Please enter a username.");
 			button.addActionListener((e)->{
 				this.serverMessage = writeMessage(false);
 				server.sendClick(serverMessage);
@@ -76,9 +76,15 @@ JButton button = new JButton("CLICK");
 			String s;
 			if(isClient) {
 				s = JOptionPane.showInputDialog("MESSAGE TO THE SERVER:");
+				if(s.equals(null)) {
+					s = "[No message entered]";
+				}
 			}
 			else {
 				s = JOptionPane.showInputDialog("MESSAGE TO THE CLIENT:");
+				if(s.equals(null)) {
+					s = "[No message entered]";
+				}
 			}
 			return s;
 		}
